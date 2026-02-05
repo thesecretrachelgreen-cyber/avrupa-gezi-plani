@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ezgi'ye Özel Avrupa Kaçamağı</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at top, #0f2a44, #020b14 60%);
+      overflow: hidden;
+    }
+    .card {
+      background: #f7fbff;
+      width: 360px;
+      padding: 24px;
+      border-radius: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,.4);
+      text-align: center;
+      animation: fadeIn 1s ease;
+      position: relative;
+      z-index: 2;
+    }
+    h1 { font-size: 22px; margin-bottom: 12px; color:#0f2a44; }
+    p { font-size: 15px; line-height: 1.5; color:#0f2a44; }
+    button {
+      margin-top: 10px;
+      padding: 10px 18px;
+      border-radius: 25px;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      background: #1f6feb;
+      color: white;
+      transition: transform .2s, opacity .2s;
+    }
+    button:hover { transform: scale(1.05); }
+    .muted { opacity: .4; background:#999; }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .plane {
+      position: absolute;
+      bottom: -30px;
+      font-size: 28px;
+      animation: planeUp 3s ease-out forwards;
+      pointer-events: none;
+    }
+    @keyframes planeUp {
+      from { transform: translateY(0) translateX(0); opacity:1; }
+      to { transform: translateY(-600px) translateX(200px); opacity:0; }
+    }
+    .answers {
+      background:#e6f1ff;
+      border-radius:12px;
+      padding:12px;
+      margin-top:14px;
+      font-size:14px;
+    }
+  </style>
+</head>
+<body>
+<div class="card" id="app"></div>
+<script>
+  const app = document.getElementById('app');
+  let answers = {};
+  start();
+
+  function start() {
+    app.innerHTML = `
+      <h1>💌 Ezgi'ye Özel Bir Davet</h1>
+      <p>Bir zarfın var.<br>İçinde spontane kararlar,<br>kahkahalar ve bol bol <em>iyi ki gelmişiz</em> var.</p>
+      <button onclick="openInvite()">✉️ Zarfı Aç</button>
+    `;
+  }
+
+  function openInvite() {
+    app.innerHTML = `
+      <h1>✈️ Avrupa Kaçamağı Davetiyesi</h1>
+      <p>18 Nisan'da başlayan<br><strong>Budapeşte – Viyana – Prag</strong><br>rotalı bir maceraya davetlisin.</p>
+      <p>🧳 Ekip: Esra & Ezgi<br>💖 Ruh hali: plansız ama efsane</p>
+      <p>Bu yolculuğa katılmak ister misin?</p>
+      <button onclick="question1()">💃 Evet</button><br>
+      <button class="muted">🙃 Ben zaten bavul topluyorum</button>
+    `;
+  }
+
+  function question1() {
+    app.innerHTML = `
+      <h1>1️⃣ Soru</h1>
+      <p>Bu gezide seni en çok hangisi heyecanlandırıyor?</p>
+      <button onclick="saveAnswer('Heyecan','Sokaklarda kaybolmak')">🍷 Sokaklarda kaybolmak</button><br>
+      <button onclick="saveAnswer('Heyecan','Tarihi yerler')">🏰 Tarihi yerleri gezmek</button><br>
+      <button onclick="saveAnswer('Heyecan','Kahve & tatlı')">🍰 Kahve & tatlı molaları</button><br>
+      <button onclick="saveAnswer('Heyecan','Instagram')">📸 Instagram'a içerik</button>
+    `;
+  }
+
+  function question2() {
+    app.innerHTML = `
+      <h1>2️⃣ Soru</h1>
+      <p>Bu tatilde hangi Ezgi ortaya çıkacak?</p>
+      <button onclick="saveAnswer('Ezgi','Cool & chic')">✨ Cool & chic Ezgi</button><br>
+      <button onclick="saveAnswer('Ezgi','Eğlence manyağı')">🤪 Eğlence manyağı Ezgi</button><br>
+      <button onclick="saveAnswer('Ezgi','Akışta')">🧘‍♀️ Akıştayım Ezgi</button><br>
+      <button onclick="saveAnswer('Ezgi','Geç kalan')">😴 Her yere geç kalan Ezgi</button>
+    `;
+  }
+
+  function question3() {
+    app.innerHTML = `
+      <h1>3️⃣ Soru</h1>
+      <p>Saat 23.00 oldu, ertesi gün erken kalkacağız. Ne yapıyoruz?</p>
+      <button onclick="saveAnswer('Gece','Otele dönüyoruz')">🛌 Otele dönüyoruz</button><br>
+      <button onclick="saveAnswer('Gece','Bir içki daha')">🍹 Bir içki daha</button><br>
+      <button onclick="saveAnswer('Gece','Kulüp')">💃 Bir anda kulüpteyiz</button><br>
+      <button onclick="saveAnswer('Gece','Gece yürüyüşü')">🚶‍♀️ Gece yürüyüşü + dertleşme</button>
+    `;
+  }
+
+  function saveAnswer(key, value) {
+    answers[key] = value;
+    if (Object.keys(answers).length === 1) question2();
+    else if (Object.keys(answers).length === 2) question3();
+    else results();
+  }
+
+  function results() {
+    app.innerHTML = `<p>Sonuçlar hesaplanıyor… ✈️</p>`;
+    setTimeout(finalScreen, 1200);
+  }
+
+  function finalScreen() {
+    app.innerHTML = `
+      <h1>🎉 Tebrikler Ezgi!</h1>
+      <p>18 Nisan Avrupa Kaçamağı için<br><strong>resmi olarak davetlisin.</strong></p>
+      <p>✈️ Budapeşte – Viyana – Prag<br>🧳 Ekip: Esra & Ezgi</p>
+      <button onclick="accept()">💃 Katılıyorum</button>
+    `;
+  }
+
+  function accept() {
+    app.innerHTML = `
+      <h1>❤️</h1>
+      <p><strong>Bu macera kalbime işlendi.</strong></p>
+      <div class="answers">
+        <strong>Seçimlerin:</strong><br>
+        ✨ Heyecan: ${answers['Heyecan']}<br>
+        💖 Ezgi modu: ${answers['Ezgi']}<br>
+        🌙 Gece planı: ${answers['Gece']}
+      </div>
+      <p style="margin-top:12px;"><em>Bu maceranın onaylanabilmesi için,<br>bu ekranın görüntüsünü seyahat yetkilisine iletmeniz rica olunur.</em></p>
+    `;
+    planes();
+  }
+
+  function planes() {
+    for (let i = 0; i < 20; i++) {
+      const p = document.createElement('div');
+      p.className = 'plane';
+      p.innerText = '✈️';
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.animationDelay = Math.random() + 's';
+      document.body.appendChild(p);
+      setTimeout(() => p.remove(), 3000);
+    }
+  }
+</script>
+</body>
+</html>
